@@ -1,0 +1,104 @@
+<html>
+
+<head>
+	<script type="text/javascript" id="MathJax-script" async
+		src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+
+	<script>
+		const tickpersecond = 100;
+		const debug = true;
+		var cookies = 10;
+		if(debug){
+			cookies = 1e10;
+		}
+		var firstbuilding = 0;
+		var secondbuilding = 0;
+		var thirdbuilding = 0;
+		var priceforfirst = 10;
+		var priceforsecond = 1000;
+		var priceforthird = 10000000;
+		var heavenlychips = 0;
+
+		function ascend() {
+			heavenlychips += Math.floor(Math.log(Math.log(cookies)));
+			cookies = 10;
+			firstbuilding = 0;
+			secondbuilding = 0;
+			thirdbuilding = 0;
+			priceforfirst = 10;
+			priceforsecond = 1000;
+			priceforthird = 10000000;
+		}
+	</script>
+</head>
+
+</html>
+
+<body bgcolor="gray">
+
+	<div id="cookies"></div>
+	<button id="firstBuilding" , style="background-color: bisque; color: palevioletred;">First Building</button>
+	<div id="firstbuildinginfo"></div>
+	<button id="secondBuilding" , style="background-color: bisque; color: palevioletred;">Second Building</button> <br>
+	<div id="secondbuildinginfo"></div>
+	<button id="thirdBuilding" , style="background-color: bisque; color: palevioletred;">Third Building</button> <br>
+	<div id="thirdbuildinginfo"></div>
+	<br>
+	<br>
+	<button id = "ascend" , style="background-color: bisque; color: palevioletred;">Ascend</button>
+	<div id = ascendinfo></div>
+	Ascend resets everything you have(Buildings, Cookies) and gives you boost that helps you go further. <br>
+	<br>
+	<hr style = "border-color: salmon;">
+	
+	<button id = "upgrade1"></button>
+	<button id = "upgrade2"></button>
+	<button id = "upgrade3"></button>
+	<button id = "upgrade4"></button>
+
+	<script>
+		var cookiecount = document.getElementById("cookies");
+		var firstinfo = document.getElementById("firstbuildinginfo")
+		var secondinfo = document.getElementById("secondbuildinginfo")
+		var thirdinfo = document.getElementById("thirdbuildinginfo")
+		setInterval(function () {
+			cookies += (1 + heavenlychips * 0.01) * firstbuilding / tickpersecond;
+			cookiecount.textContent = "Cookies: " + cookies.toFixed(2) + " Cps: "  + (firstbuilding).toFixed(2) * (heavenlychips * 0.01 + 1) + " HC: " + heavenlychips.toFixed(2);
+			firstbuilding += (1 + heavenlychips * 0.01) * secondbuilding / tickpersecond;
+			secondbuilding += (1 + heavenlychips * 0.01) * thirdbuilding / tickpersecond;
+			firstinfo.textContent = "Amount: " + firstbuilding.toFixed(2) + " Price: " + priceforfirst.toFixed(2);
+			secondinfo.textContent = "Amount: " + secondbuilding.toFixed(2) + " Price: " + priceforsecond.toFixed(2);
+			thirdinfo.textContent = "Amount: " + thirdbuilding.toFixed(2) + " Price: " + priceforthird.toFixed(2);
+		}, 1000 / tickpersecond);
+
+		document.getElementById("firstBuilding").onclick = function () {
+			if (cookies >= priceforfirst) {
+				cookies -= priceforfirst;
+				firstbuilding += 1;
+				priceforfirst *= 1.2;
+			}
+		}
+
+		document.getElementById("secondBuilding").onclick = function () {
+			if (cookies >= priceforsecond) {
+				cookies -= priceforsecond;
+				secondbuilding += 1;
+				priceforsecond *= 2;
+			}
+		}
+
+		document.getElementById("thirdBuilding").onclick = function () {
+			if (cookies >= priceforthird) {
+				cookies -= priceforthird;
+				thirdbuilding += 1;
+				priceforthird *= 10;
+			}
+		}
+
+		document.getElementById("ascend").onclick = function () {
+			ascend();
+		}
+
+	</script>
+
+</body>
